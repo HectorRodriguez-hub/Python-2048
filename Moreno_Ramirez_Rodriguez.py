@@ -5,6 +5,7 @@ Héctor René Rodríguez Hernández """
 
 import math
 #Variables globales
+#Hola Ternuras
 tam=4
 game=True
 
