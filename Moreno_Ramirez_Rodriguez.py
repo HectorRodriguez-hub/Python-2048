@@ -1,13 +1,21 @@
-""" Autores :
-Camilo Andres Moreno Colorado
-Aldemar Yamid Ramirez Avila
-Héctor René Rodríguez Hernández """
+## =========================================================================
+## Autores :
+## Camilo Andres Moreno Colorado
+## Aldemar Yamid Ramirez Avila
+## Héctor René Rodríguez Hernández 
+## =========================================================================
 
 #Imports 
 import math, random, os
-#Variables globales
+
+## -------------------------------------------------------------------------
+## Variables globales
+## -------------------------------------------------------------------------
+
 tam=4
 game=True
+
+## -------------------------------------------------------------------------
 #funciones de impresion
 def Print(M):
     for j in range(len(M)):
@@ -25,12 +33,16 @@ def Print(M):
     print("----------------------------")
     #end for
 #end def
+
+## -------------------------------------------------------------------------
 #funciones de juego
 def crear_Matriz(tam):
     M = [[ 0 for j in range (tam)] for i  in range(tam) ]
     print("")
     return M
 #end def
+
+## -------------------------------------------------------------------------
 def start(M):
     i = random.randint(0,3)
     j = random.randint(0,3)
@@ -44,6 +56,8 @@ def start(M):
     M[a][b] = 2
     return M
 #end def
+
+## -------------------------------------------------------------------------
 def arriba(M):
     for i in range(tam):
         j = 0 
@@ -67,6 +81,8 @@ def arriba(M):
                             k = k+1
     return M
 #end def
+
+## -------------------------------------------------------------------------
 def izquierda(M):
     for j in range(tam):
         i = 0 
@@ -90,6 +106,8 @@ def izquierda(M):
                             k = k + 1
     return M
 #end def
+
+## -------------------------------------------------------------------------
 def derecha(M):
     for j in range(tam):
         i = tam -1
@@ -113,6 +131,8 @@ def derecha(M):
                             k = k - 1
     return M
 #end def
+
+## -------------------------------------------------------------------------
 def abajo(M):
     for i in range(tam):
         j = tam - 1
@@ -136,6 +156,8 @@ def abajo(M):
                             k = k - 1
     return M
 #end def
+
+## -------------------------------------------------------------------------
 def aleatorio(M):
     i = random.randint(0,3)
     j = random.randint(0,3)
@@ -150,10 +172,17 @@ def opciones(M):
     if a == M:
         return True
 #end def
+
+
+## -------------------------------------------------------------------------
+## ---------------------------------- MAIN ---------------------------------
+## -------------------------------------------------------------------------
+
 #LLamado a funciones
 M = crear_Matriz(tam)
 start(M)
 print("Bienvenidos a 2048")
+
 #game
 while game:
     Print(M)
@@ -167,5 +196,7 @@ while game:
         izquierda(M)
     if entrada== 's':
         abajo(M)
+    if entrada== 'n':
+        game = False
     aleatorio(M)
     os.system("cls")
