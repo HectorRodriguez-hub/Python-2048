@@ -7,22 +7,13 @@
 
 #Imports 
 import math, random, os
-#import GUI2 as p
 
-## -------------------------------------------------------------------------
-## Variables globales
-## -------------------------------------------------------------------------
-'''
-self.tam=4
-game=True
-'''
 ## -------------------------------------------------------------------------
 #funciones de impresion
 class arcade:
     def __init__(self):
         self.tam = 4
         self.game = True
-        #self.gui = gui
         
     def Print(self, M):
         for j in range(len(M)):
@@ -31,10 +22,7 @@ class arcade:
                 if M[i][j] == math.inf:
                     print("X","",end = "")
                 else:
-                    #print("-","",end = "")
                     print(M[i][j],"",end = "")
-                    
-                #print(M[i][j],"",end = "")
             #end for
             print()
         print("----------------------------")
@@ -61,7 +49,7 @@ class arcade:
             b = random.randint(0,3)
         #end whle
         M[a][b] = 2
-        
+        '''
         M[0][0] = 2 
         M[0][1] = 16
         M[0][2] = 8
@@ -72,7 +60,7 @@ class arcade:
         M[1][2] = 16
         M[1][3] = 32
 
-        M[2][0] = 2
+        M[2][0] = 1024
         M[2][1] = 16
         M[2][2] = 32
         M[2][3] = 128
@@ -81,11 +69,12 @@ class arcade:
         M[3][1] = 128
         M[3][2] = 64
         M[3][3] = 64
+        '''
         return M
     #end def
 
     ## -------------------------------------------------------------------------
-    def arriba(self, M):
+    def arriba(self, M, puntaje):
         for i in range(self.tam):
             j = 0 
             k = j+1 
@@ -96,6 +85,7 @@ class arcade:
                 else: 
                     if M[i][j] == M[i][k] and M[i][j] != 0:
                         M[i][j] = M[i][j]*2
+                        puntaje += M[i][j]
                         M[i][k] = 0
                         j = j + 1
                         k = j + 1
@@ -106,11 +96,11 @@ class arcade:
                         else: 
                             if M[i][k] == 0: 
                                 k = k+1
-        return M
+        return [M, puntaje]
     #end def
 
     ## -------------------------------------------------------------------------
-    def izquierda(self, M):
+    def izquierda(self, M, puntaje):
         for j in range(self.tam):
             i = 0 
             k = i+1 
@@ -121,6 +111,7 @@ class arcade:
                 else: 
                     if M[i][j] == M[k][j] and M[i][j] != 0:
                         M[i][j] = M[i][j]*2
+                        puntaje += M[i][j]
                         M[k][j] = 0
                         i = i + 1
                         k = i + 1
@@ -131,11 +122,11 @@ class arcade:
                         else: 
                             if M[k][j] == 0: 
                                 k = k + 1
-        return M
+        return [M, puntaje]
     #end def
 
     ## -------------------------------------------------------------------------
-    def derecha(self, M):
+    def derecha(self, M, puntaje):
         for j in range(self.tam):
             i = self.tam -1
             k = i-1
@@ -146,6 +137,7 @@ class arcade:
                 else:
                     if M[i][j] == M[k][j] and M[i][j] != 0:
                         M[i][j] = M[i][j]*2
+                        puntaje += M[i][j]
                         M[k][j] = 0
                         i = i - 1
                         k = i - 1
@@ -156,11 +148,11 @@ class arcade:
                         else: 
                             if M[k][j] == 0:
                                 k = k - 1
-        return M
+        return [M, puntaje]
     #end def
 
     ## -------------------------------------------------------------------------
-    def abajo(self, M):
+    def abajo(self, M, puntaje):
         for i in range(self.tam):
             j = self.tam - 1
             k = j - 1 
@@ -171,6 +163,7 @@ class arcade:
                 else: 
                     if M[i][j] == M[i][k] and M[i][j] != 0:
                         M[i][j] = M[i][j]*2
+                        puntaje += M[i][j]
                         M[i][k] = 0
                         j = j - 1
                         k = j - 1
@@ -181,7 +174,7 @@ class arcade:
                         else: 
                             if M[i][k] == 0: 
                                 k = k - 1
-        return M
+        return [M, puntaje]
     #end def
     
     ## -------------------------------------------------------------------------
@@ -200,18 +193,14 @@ class arcade:
         op = [True,True,True,True]
         print(op)
         print("opcional arriba")
-        if self.iguales(M,  self.arriba(C)):
+        if self.iguales(M,  self.arriba(C, 0)[0]):
             op[0] = False
-            #M = copia(auxM)
-        if self.iguales(M,  self.abajo(C)):
+        if self.iguales(M,  self.abajo(C, 0)[0]):
             op[1] = False
-            #M = copia(auxM)
-        if self.iguales(M,  self.derecha(C)):
+        if self.iguales(M,  self.derecha(C, 0)[0]):
             op[2] = False
-            #M = copia(auxM)
-        if self.iguales(M,  self.izquierda(C)):
+        if self.iguales(M,  self.izquierda(C, 0)[0]):
             op[3] = False
-            #M = copia(auxM)
         print(op)
         if True in op:
             return True
@@ -220,17 +209,15 @@ class arcade:
     
     ## -------------------------------------------------------------------------
     def aleatorio(self, M):
-        #print("entro aleatorio")
         vacios = []
+        num_proba = [2, 2, 2, 2, 2, 2, 4, 4] 
         for i in range(self.tam):
             for j in range(self.tam):
                 if M[i][j] == 0:
                     vacios.append([i,j])
-        #print("vacios", vacios)
         if len(vacios) > 0:
-            #print("entro agregar 2")
             ale = random.choice(vacios)
-            M[ale[0]][ale[1]] = 2
+            M[ale[0]][ale[1]] = random.choice(num_proba)
         
         
     def copia(self, M):
@@ -239,51 +226,9 @@ class arcade:
             for j in range(self.tam):
                 C[i][j] = M[i][j]
         return C
-        #end def
-        
-    #end def
-    '''
-    def play(self):
-        #LLamado a funciones
-        M = self.crear_Matriz(self.self.tam)
-        self.start(M)
-        print("Bienvenidos a 2048")
-
-        #game
-        while self.game:
-            self.Print(M)
-            tecla = input("Please type a key: ")
-            entrada = tecla.lower()
-            if entrada== 'w':
-                self.arriba(M)
-                #self.gui.update_GUI(M,0)
-            if entrada== 'd':
-                self.derecha(M)
-            if entrada== 'a':
-                self.izquierda(M)
-            if entrada== 's':
-                self.abajo(M)
-            if entrada== 'n':
-                game = False
-            self.aleatorio(M)
-            os.system("cls")
-    '''
     def getGame(self):
         return self.game
     
     def setGame(self, newgame):
         self.game = newgame
     
-    #def getGame(self):
-    #    return self.game
-    
-    '''
-    def setGameOver(self, M):
-        None
-    '''
-    
-
-## -------------------------------------------------------------------------
-## ---------------------------------- MAIN ---------------------------------
-## -------------------------------------------------------------------------
-

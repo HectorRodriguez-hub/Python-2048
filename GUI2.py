@@ -1,12 +1,16 @@
+## =========================================================================
+## Autores :
+## Camilo Andres Moreno Colorado
+## Aldemar Yamid Ramirez Avila
+## Héctor René Rodríguez Hernández 
+## =========================================================================
+
 from tkinter import *
 import Logica2048 as h
 import os
 import Colores as c
-#from Moreno_Ramirez_Rodriguez import arcade
-#import tkinter as tk
 
 ## -------------------------------------------------------------------------
-## Otra manera de escribir el cod
 class interface:
     def __init__(self, ventana):
         self.ventana = ventana
@@ -71,61 +75,49 @@ class interface:
         M = self.game.crear_Matriz(tam)
         self.game.start(M)
         print("Bienvenidos a 2048")
-        aux = self.game.copia(M)
+        aux = [self.game.copia(M), 0]
         game_over = True
         #game
         self.update_GUI(M,0)
         self.game.Print(M)
         while game_over:
-            #Mcop = self.game.getCopiaM()
-            M = self.game.copia(aux)
-            C = self.game.copia(aux)
-            ale = False
             tecla = input("Please type a key: ")
             entrada = tecla.lower()
-            if entrada== 'w':
-                aux = self.game.arriba(aux)
-                if self.game.iguales(C,aux):
-                    ale = True
-            if entrada== 'd':
-                aux = self.game.derecha(aux)
-                if self.game.iguales(C,aux):
-                    ale = True
-            if entrada== 'a':
-                aux = self.game.izquierda(aux)
-                if self.game.iguales(C,aux):
-                    ale = True
-            if entrada== 's':
-                aux = self.game.abajo(aux)
-                if self.game.iguales(C,aux):
-                    ale = True
-            if entrada== 'n':
-                game_over = False
-            if not ale:
-                self.game.aleatorio(aux)
-            game_over = self.game.opcional(aux)
-            if any(2048 in row for row in aux):
-                self.game_over(game_over)
-                game_over = False
-            elif not game_over:
-                self.game_over(game_over)
-            #game_over = r
-            self.update_GUI(aux,0)
-            self.game.Print(aux)
-            os.system("cls")
+            if entrada == 'w' or entrada == 'd' or entrada == 'a' or entrada == 's' or entrada == 'n':
+                M = self.game.copia(aux[0])
+                C = self.game.copia(aux[0])
+                ale = False
+                if entrada== 'w':
+                    aux = self.game.arriba(aux[0], aux[1])
+                    ale = self.game.iguales(C,aux[0])
+                if entrada== 'd':
+                    aux = self.game.derecha(aux[0], aux[1])
+                    ale = self.game.iguales(C,aux[0])
+                if entrada== 'a':
+                    aux = self.game.izquierda(aux[0], aux[1])
+                    ale = self.game.iguales(C,aux[0])
+                if entrada== 's':
+                    aux = self.game.abajo(aux[0], aux[1])
+                    ale = self.game.iguales(C,aux[0])
+                if entrada== 'n':
+                    game_over = False
+                if not ale:
+                    self.game.aleatorio(aux[0])
+                game_over = self.game.opcional(aux[0])
+                if any(2048 in row for row in aux[0]):
+                    self.game_over(game_over)
+                    game_over = False
+                elif not game_over:
+                    self.game_over(game_over)
+                print(aux[1])
+                self.update_GUI(aux[0], aux[1])
+                self.game.Print(aux[0])
+                os.system("cls")
         
 
-'''
+## -------------------------------------------------------------------------
+## ---------------------------------- MAIN ---------------------------------
+## -------------------------------------------------------------------------
 
-def crear_Matriz(tam):
-    M = [[ 0 for j in range (tam)] for i  in range(tam) ]
-    print("")
-    return M
-
-M = crear_Matriz(4)
-M[1][1] = 2
-M[1][3] = 2
-M[0][0] = 2048
-'''
 root = Tk() #Se crea la raiz
 game = interface(root)
