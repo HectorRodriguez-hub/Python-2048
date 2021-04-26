@@ -13,7 +13,7 @@ import math, random, os
 ## Variables globales
 ## -------------------------------------------------------------------------
 '''
-tam=4
+self.tam=4
 game=True
 '''
 ## -------------------------------------------------------------------------
@@ -61,6 +61,26 @@ class arcade:
             b = random.randint(0,3)
         #end whle
         M[a][b] = 2
+        
+        M[0][0] = 2 
+        M[0][1] = 16
+        M[0][2] = 8
+        M[0][3] = 4
+
+        M[1][0] = 1024
+        M[1][1] = 8
+        M[1][2] = 16
+        M[1][3] = 32
+
+        M[2][0] = 1024
+        M[2][1] = 16
+        M[2][2] = 32
+        M[2][3] = 128
+
+        M[3][0] = 16
+        M[3][1] = 128
+        M[3][2] = 64
+        M[3][3] = 64
         return M
     #end def
 
@@ -163,26 +183,69 @@ class arcade:
                                 k = k - 1
         return M
     #end def
-
+    
+    ## -------------------------------------------------------------------------
+    def iguales(self, C, M):
+        for i in range(self.tam):
+            for j in range(self.tam):
+                if C[i][j] != M[i][j]:
+                    return False
+        return True
+    #end def 
+    
+    ## -------------------------------------------------------------------------
+    def opcional(self, M):
+        print("entro opcional")
+        C = self.copia(M)
+        op = [True,True,True,True]
+        print(op)
+        print("opcional arriba")
+        if self.iguales(M,  self.arriba(C)):
+            op[0] = False
+            #M = copia(auxM)
+        if self.iguales(M,  self.abajo(C)):
+            op[1] = False
+            #M = copia(auxM)
+        if self.iguales(M,  self.derecha(C)):
+            op[2] = False
+            #M = copia(auxM)
+        if self.iguales(M,  self.izquierda(C)):
+            op[3] = False
+            #M = copia(auxM)
+        print(op)
+        if True in op:
+            return True
+        return False 
+    #end def
+    
     ## -------------------------------------------------------------------------
     def aleatorio(self, M):
-        i = random.randint(0,3)
-        j = random.randint(0,3)
-        cont = 0
-        while M[i][j] != 0:
-            i = random.randint(0,3)
-            j = random.randint(0,3)
-        M[i][j] = 2
-    #end def 
-    def opciones(self, M):
-        a = self.arriba(M)
-        if a == M:
-            return True
+        #print("entro aleatorio")
+        vacios = []
+        for i in range(self.tam):
+            for j in range(self.tam):
+                if M[i][j] == 0:
+                    vacios.append([i,j])
+        #print("vacios", vacios)
+        if len(vacios) > 0:
+            #print("entro agregar 2")
+            ale = random.choice(vacios)
+            M[ale[0]][ale[1]] = 2
+        
+        
+    def copia(self, M):
+        C = [[0 for i in range(self.tam)] for j in range(self.tam)]
+        for i in range(self.tam):
+            for j in range(self.tam):
+                C[i][j] = M[i][j]
+        return C
+        #end def
+        
     #end def
     '''
     def play(self):
         #LLamado a funciones
-        M = self.crear_Matriz(self.tam)
+        M = self.crear_Matriz(self.self.tam)
         self.start(M)
         print("Bienvenidos a 2048")
 
@@ -210,7 +273,15 @@ class arcade:
     
     def setGame(self, newgame):
         self.game = newgame
-
+    
+    #def getGame(self):
+    #    return self.game
+    
+    '''
+    def setGameOver(self, M):
+        None
+    '''
+    
 
 ## -------------------------------------------------------------------------
 ## ---------------------------------- MAIN ---------------------------------

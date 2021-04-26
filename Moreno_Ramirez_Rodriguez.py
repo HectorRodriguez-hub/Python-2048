@@ -43,24 +43,24 @@ def start(M):
     #end whle
     M[a][b] = 2
     M[0][0] = 2 
-    M[0][1] = 3
-    M[0][2] = 4
-    M[0][3] = 5
+    M[0][1] = 16
+    M[0][2] = 8
+    M[0][3] = 4
 
-    M[1][0] = 6
-    M[1][1] = 7
-    M[1][2] = 8
-    M[1][3] = 9
+    M[1][0] = 4
+    M[1][1] = 8
+    M[1][2] = 16
+    M[1][3] = 32
 
-    M[2][0] = 13
-    M[2][1] = 114
-    M[2][2] = 1415
-    M[2][3] = 123
+    M[2][0] = 8
+    M[2][1] = 16
+    M[2][2] = 32
+    M[2][3] = 128
 
-    M[3][0] = 111
-    M[3][1] = 176
-    M[3][2] = 88
-    M[3][3] = 77
+    M[3][0] = 16
+    M[3][1] = 128
+    M[3][2] = 0
+    M[3][3] = 0
     return M
 #end def
 def arriba(M):
@@ -230,19 +230,19 @@ while game and conti != False:
         Print(aux)
         Print(C)
         if iguales(C,aux):
-            ale = True
+            ale = False
     if entrada== 'd':
         aux = derecha(aux)
         if iguales(C,aux):
-            ale = True
+            ale = False
     if entrada== 'a':
         aux = izquierda(aux)
         if iguales(C,aux):
-            ale = True
+            ale = False
     if entrada== 's':
         aux = abajo(aux)
         if iguales(C,aux):
-            ale = True
+            ale = False
     if ale == True:
         r = aleatorio(M)
     conti = r 

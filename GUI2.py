@@ -61,7 +61,7 @@ class interface:
             game_over_cuadro.place(relx=0.5, rely=0.5, anchor="center")
             Label( game_over_cuadro, text="You win!", bg="#ffcc00").pack()
         else:
-            game_over_cuadro = Frame(self.main_grid, borderwidth=2)
+            game_over_cuadro = Frame(self.cuadro_principal, borderwidth=2)
             game_over_cuadro.place(relx=0.5, rely=0.5, anchor="center")
             Label( game_over_cuadro, text="Game over!", bg="#a39489").pack()
         
@@ -71,25 +71,48 @@ class interface:
         M = self.game.crear_Matriz(tam)
         self.game.start(M)
         print("Bienvenidos a 2048")
-
+        aux = self.game.copia(M)
+        game_over = True
         #game
-        while self.game.getGame():
+        while game_over:
+            #Mcop = self.game.getCopiaM()
+            M = self.game.copia(aux)
+            C = self.game.copia(aux)
+            ale = False
             self.update_GUI(M,0)
             self.game.Print(M)
             tecla = input("Please type a key: ")
             entrada = tecla.lower()
             if entrada== 'w':
-                self.game.arriba(M)
+                aux = self.game.arriba(aux)
+                if self.game.iguales(C,aux):
+                    ale = True
             if entrada== 'd':
-                self.game.derecha(M)
+                aux = self.game.derecha(aux)
+                if self.game.iguales(C,aux):
+                    ale = True
             if entrada== 'a':
-                self.game.izquierda(M)
+                aux = self.game.izquierda(aux)
+                if self.game.iguales(C,aux):
+                    ale = True
             if entrada== 's':
-                self.game.abajo(M)
+                aux = self.game.abajo(aux)
+                if self.game.iguales(C,aux):
+                    ale = True
             if entrada== 'n':
-                self.game.setGame(False)
-            self.game.aleatorio(M)
+                game_over = False
+            if any(2048 in row for row in aux):
+                self.game_over(game_over)
+                game_over = False
+            if not ale:
+                self.game.aleatorio(aux)
+            else:
+                game_over = self.game.opcional(aux)
+            if game_over == False:
+                self.game_over(game_over)
+            #game_over = r 
             os.system("cls")
+        
 
 '''
 
