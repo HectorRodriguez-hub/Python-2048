@@ -59,11 +59,11 @@ class interface:
         if condicion:
             game_over_cuadro = Frame(self.cuadro_principal, borderwidth=2)
             game_over_cuadro.place(relx=0.5, rely=0.5, anchor="center")
-            Label( game_over_cuadro, text="You win!", bg="#ffcc00").pack()
+            Label( game_over_cuadro, text="You win!", bg="#ffcc00", font =("Helvetica", 48, "bold")).pack()
         else:
             game_over_cuadro = Frame(self.cuadro_principal, borderwidth=2)
             game_over_cuadro.place(relx=0.5, rely=0.5, anchor="center")
-            Label( game_over_cuadro, text="Game over!", bg="#a39489").pack()
+            Label( game_over_cuadro, text="Game over!", bg="#a39489", font =("Helvetica", 48, "bold") ).pack()
         
         
     def play(self, tam):
@@ -74,13 +74,13 @@ class interface:
         aux = self.game.copia(M)
         game_over = True
         #game
+        self.update_GUI(M,0)
+        self.game.Print(M)
         while game_over:
             #Mcop = self.game.getCopiaM()
             M = self.game.copia(aux)
             C = self.game.copia(aux)
             ale = False
-            self.update_GUI(M,0)
-            self.game.Print(M)
             tecla = input("Please type a key: ")
             entrada = tecla.lower()
             if entrada== 'w':
@@ -101,16 +101,17 @@ class interface:
                     ale = True
             if entrada== 'n':
                 game_over = False
+            if not ale:
+                self.game.aleatorio(aux)
+            game_over = self.game.opcional(aux)
             if any(2048 in row for row in aux):
                 self.game_over(game_over)
                 game_over = False
-            if not ale:
-                self.game.aleatorio(aux)
-            else:
-                game_over = self.game.opcional(aux)
-            if game_over == False:
+            elif not game_over:
                 self.game_over(game_over)
-            #game_over = r 
+            #game_over = r
+            self.update_GUI(aux,0)
+            self.game.Print(aux)
             os.system("cls")
         
 
