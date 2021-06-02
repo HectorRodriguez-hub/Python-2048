@@ -201,14 +201,14 @@ class arcade:
         if w == a and a == s and s == d:
             return random.choice(select)
         max_puntaje = max(w,a,s,d)
-        if max_puntaje == w:
-            return 'w'
         if max_puntaje == s:
             return 's'
         if max_puntaje == d:
             return 'd'
         if max_puntaje == a:
             return 'a' 
+        if max_puntaje == w:
+            return 'w'
     #end def
 
     ## -------------------------------------------------------------------------
