@@ -15,17 +15,12 @@ class interface:
     def __init__(self, ventana):
         self.ventana = ventana
         self.ventana.title("2048")
-        #self.ventana.grid()
         self.cuadro_principal = Frame(self.ventana, bg ='red', width=600, height=600)
         self.cuadro_principal.grid(pady=(100, 0))
-        self.make_GUI()
         self.game = h.arcade()
-        self.play(4)
-        self.ventana.mainloop()
-        
     
+    ## -------------------------------------------------------------------------
     def make_GUI(self):
-        
         # Celdas
         self.celdas = []
         for j in range(4):
@@ -46,6 +41,7 @@ class interface:
         self.puntaje_label = Label(puntaje_cuadro, text="0", font = 'black')
         self.puntaje_label.grid(row = 1)
     
+    ## -------------------------------------------------------------------------
     def update_GUI(self, M, score):
         for j in range(4):
             for i in range(4):
@@ -56,9 +52,9 @@ class interface:
                 else:
                     self.celdas[i][j]["cuadro"].configure(bg = c.CELDA_COLORES[value])
                     self.celdas[i][j]["numero"].configure( bg = c.CELDA_COLORES[value],  fg = c.CELDA_NUM_COLORES[value], font = ("Helvetica", 40, "bold"), text = str(value))
-        self.puntaje_label.configure(text = score) #Marcador
-        #self.update_idletasks()
-        
+        self.puntaje_label.configure(text = score) 
+    
+    ## -------------------------------------------------------------------------
     def game_over(self, condicion):
         if condicion:
             game_over_cuadro = Frame(self.cuadro_principal, borderwidth=2)
@@ -68,18 +64,18 @@ class interface:
             game_over_cuadro = Frame(self.cuadro_principal, borderwidth=2)
             game_over_cuadro.place(relx=0.5, rely=0.5, anchor="center")
             Label( game_over_cuadro, text="Game over!", bg="#a39489", font =("Helvetica", 48, "bold") ).pack()
-        
-        
-    def play(self, tam):
+    
+    ## -------------------------------------------------------------------------
+    def play(self):
         #LLamado a funciones
-        M = self.game.crear_Matriz(tam)
+        M = self.game.crear_Matriz()
         self.game.start(M)
         print("Bienvenidos a 2048")
         aux = [self.game.copia(M), 0]
         game_over = True
         #game
         self.update_GUI(M,0)
-        self.game.Print(M)
+        #self.game.Print(M)
         while game_over:
             tecla = input("Please type a key: ")
             entrada = tecla.lower()
@@ -101,19 +97,18 @@ class interface:
                     ale = self.game.iguales(C,aux[0])
                 if entrada== 'n':
                     game_over = False
-                if not ale:
+                if not ale and game_over:
                     self.game.aleatorio(aux[0])
-                game_over = self.game.opcional(aux[0])
+                if game_over:
+                    game_over = self.game.opcional(aux[0])
                 if any(2048 in row for row in aux[0]):
                     self.game_over(game_over)
                     game_over = False
                 elif not game_over:
                     self.game_over(game_over)
-                print(aux[1])
                 self.update_GUI(aux[0], aux[1])
-                self.game.Print(aux[0])
+                #self.game.Print(aux[0])
                 os.system("cls")
-        
 
 ## -------------------------------------------------------------------------
 ## ---------------------------------- MAIN ---------------------------------
@@ -121,3 +116,6 @@ class interface:
 
 root = Tk() #Se crea la raiz
 game = interface(root)
+game.make_GUI()
+game.play()
+game.ventana.mainloop()

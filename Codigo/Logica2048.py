@@ -5,15 +5,12 @@
 ## Héctor René Rodríguez Hernández 
 ## =========================================================================
 
-#Imports 
 import math, random, os
 
 ## -------------------------------------------------------------------------
-#funciones de impresion
 class arcade:
     def __init__(self):
         self.tam = 4
-        self.game = True
         
     def Print(self, M):
         for j in range(len(M)):
@@ -31,7 +28,7 @@ class arcade:
 
     ## -------------------------------------------------------------------------
     #funciones de juego
-    def crear_Matriz(self, tam):
+    def crear_Matriz(self):
         M = [[ 0 for j in range (self.tam)] for i  in range(self.tam) ]
         print("")
         return M
@@ -49,30 +46,9 @@ class arcade:
             b = random.randint(0,3)
         #end whle
         M[a][b] = 2
-        '''
-        M[0][0] = 2 
-        M[0][1] = 16
-        M[0][2] = 8
-        M[0][3] = 4
-
-        M[1][0] = 1024
-        M[1][1] = 8
-        M[1][2] = 16
-        M[1][3] = 32
-
-        M[2][0] = 1024
-        M[2][1] = 16
-        M[2][2] = 32
-        M[2][3] = 128
-
-        M[3][0] = 16
-        M[3][1] = 128
-        M[3][2] = 64
-        M[3][3] = 64
-        '''
         return M
     #end def
-
+    
     ## -------------------------------------------------------------------------
     def arriba(self, M, puntaje):
         for i in range(self.tam):
@@ -98,7 +74,7 @@ class arcade:
                                 k = k+1
         return [M, puntaje]
     #end def
-
+    
     ## -------------------------------------------------------------------------
     def izquierda(self, M, puntaje):
         for j in range(self.tam):
@@ -124,7 +100,7 @@ class arcade:
                                 k = k + 1
         return [M, puntaje]
     #end def
-
+    
     ## -------------------------------------------------------------------------
     def derecha(self, M, puntaje):
         for j in range(self.tam):
@@ -150,7 +126,7 @@ class arcade:
                                 k = k - 1
         return [M, puntaje]
     #end def
-
+    
     ## -------------------------------------------------------------------------
     def abajo(self, M, puntaje):
         for i in range(self.tam):
@@ -188,11 +164,8 @@ class arcade:
     
     ## -------------------------------------------------------------------------
     def opcional(self, M):
-        print("entro opcional")
         C = self.copia(M)
         op = [True,True,True,True]
-        print(op)
-        print("opcional arriba")
         if self.iguales(M,  self.arriba(C, 0)[0]):
             op[0] = False
         if self.iguales(M,  self.abajo(C, 0)[0]):
@@ -201,7 +174,6 @@ class arcade:
             op[2] = False
         if self.iguales(M,  self.izquierda(C, 0)[0]):
             op[3] = False
-        print(op)
         if True in op:
             return True
         return False 
@@ -219,16 +191,11 @@ class arcade:
             ale = random.choice(vacios)
             M[ale[0]][ale[1]] = random.choice(num_proba)
         
-        
+    ## =========================================================================
     def copia(self, M):
         C = [[0 for i in range(self.tam)] for j in range(self.tam)]
         for i in range(self.tam):
             for j in range(self.tam):
                 C[i][j] = M[i][j]
         return C
-    def getGame(self):
-        return self.game
-    
-    def setGame(self, newgame):
-        self.game = newgame
     

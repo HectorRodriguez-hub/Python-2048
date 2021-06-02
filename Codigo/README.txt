@@ -1,0 +1,1 @@
+Para ejecutar el archivo debe correr GUI2 e ingresar las teclas por consola.
