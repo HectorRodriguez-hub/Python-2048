@@ -9,6 +9,7 @@ from tkinter import *
 import Logica2048 as h
 import os
 import Colores as c
+import time as t
 
 ## -------------------------------------------------------------------------
 class interface:
@@ -76,8 +77,10 @@ class interface:
         #game
         self.update_GUI(M,0)
         #self.game.Print(M)
+        cont = 0
         while game_over:
-            tecla = input("Please type a key: ")
+            #tecla = input("Please type a key: ")
+            tecla= self.game.max_score(aux[0],aux[1])
             entrada = tecla.lower()
             if entrada == 'w' or entrada == 'd' or entrada == 'a' or entrada == 's' or entrada == 'n':
                 M = self.game.copia(aux[0])
@@ -106,9 +109,10 @@ class interface:
                     game_over = False
                 elif not game_over:
                     self.game_over(game_over)
+                #t.sleep(0.5)
                 self.update_GUI(aux[0], aux[1])
-                #self.game.Print(aux[0])
-                os.system("cls")
+                #os.system("pause")
+                
 
 ## -------------------------------------------------------------------------
 ## ---------------------------------- MAIN ---------------------------------

@@ -178,7 +178,39 @@ class arcade:
             return True
         return False 
     #end def
-    
+
+
+    ## -------------------------------------------------------------------------
+
+    def max_score(self, M, puntaje):
+        C = self.copia(M)
+        w = a = s = d = puntaje
+        select = ('w','s','a','d')
+        if not self.iguales(M,  self.arriba(C, 0)[0]):
+            H = self.copia(M)
+            w += self.arriba(H,0)[1]
+        if not self.iguales(M,  self.abajo(C, 0)[0]):
+            H = self.copia(M)
+            s += self.abajo(H,0)[1]
+        if not self.iguales(M,  self.derecha(C, 0)[0]):
+            H = self.copia(M)
+            d += self.derecha(H,0)[1]
+        if not self.iguales(M,  self.izquierda(C, 0)[0]):
+            H = self.copia(M)
+            a += self.izquierda(H,0)[1]
+        if w == a and a == s and s == d:
+            return random.choice(select)
+        max_puntaje = max(w,a,s,d)
+        if max_puntaje == w:
+            return 'w'
+        if max_puntaje == s:
+            return 's'
+        if max_puntaje == d:
+            return 'd'
+        if max_puntaje == a:
+            return 'a' 
+    #end def
+
     ## -------------------------------------------------------------------------
     def aleatorio(self, M):
         vacios = []
