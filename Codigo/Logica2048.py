@@ -5,7 +5,7 @@
 ## Héctor René Rodríguez Hernández 
 ## =========================================================================
 
-import math, random, os
+import math, random, os, itertools
 
 ## -------------------------------------------------------------------------
 class arcade:
@@ -184,31 +184,39 @@ class arcade:
 
     def max_score(self, M, puntaje):
         C = self.copia(M)
-        w = a = s = d = puntaje
-        select = ('w','s','a','d')
+        select = [['w',puntaje],['a',puntaje],['s',puntaje],['d',puntaje]]
         if not self.iguales(M,  self.arriba(C, 0)[0]):
             H = self.copia(M)
-            w += self.arriba(H,0)[1]
+            select[0][1] += self.arriba(H,0)[1]
         if not self.iguales(M,  self.abajo(C, 0)[0]):
             H = self.copia(M)
-            s += self.abajo(H,0)[1]
+            select[2][1] += self.abajo(H,0)[1]
         if not self.iguales(M,  self.derecha(C, 0)[0]):
             H = self.copia(M)
-            d += self.derecha(H,0)[1]
+            select[3][1] += self.derecha(H,0)[1]
         if not self.iguales(M,  self.izquierda(C, 0)[0]):
             H = self.copia(M)
-            a += self.izquierda(H,0)[1]
-        if w == a and a == s and s == d:
-            return random.choice(select)
-        max_puntaje = max(w,a,s,d)
-        if max_puntaje == s:
-            return 's'
-        if max_puntaje == d:
-            return 'd'
-        if max_puntaje == a:
-            return 'a' 
-        if max_puntaje == w:
-            return 'w'
+            select[1][1] += self.izquierda(H,0)[1]
+        
+        max_puntaje = max(select[0][1],select[1][1],select[2][1],select[3][1])
+        
+        for i in range(4,1,-1):
+            for c in itertools.combinations(select,i):
+                print(c)
+                if i == 4:
+                    if c[0][1] == c[1][1] and c[1][1] == c[2][1] and c[2][1] == c[3][1] and c[3][1] == max_puntaje:
+                        return random.choice(c)[0]
+                    
+                if i == 3:
+                    if c[0][1] == c[1][1] and c[1][1] == c[2][1] and c[2][1] == max_puntaje:
+                        return random.choice(c)[0]
+                    
+                if i == 2:
+                    if c[0][1] == c[1][1] and c[1][1] == max_puntaje:
+                        return random.choice(c)[0]
+                if i == 1:
+                    if c[0][1] == max_puntaje:
+                        return c[0][0]
     #end def
 
     ## -------------------------------------------------------------------------
