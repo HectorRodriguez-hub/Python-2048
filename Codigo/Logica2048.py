@@ -192,20 +192,39 @@ class arcade:
             H = self.copia(M)
             select[0][1] += self.arriba(H,0)[1]
             select[0][2] = True
+        C = self.copia(M)
         if not self.iguales(M,  self.abajo(C, 0)[0]):
             H = self.copia(M)
             select[2][1] += self.abajo(H,0)[1]
             select[2][2] = True
+        C = self.copia(M)
         if not self.iguales(M,  self.derecha(C, 0)[0]):
+            print(" wha happ")
             H = self.copia(M)
             select[3][1] += self.derecha(H,0)[1]
             select[3][2] = True
+        C = self.copia(M)
         if not self.iguales(M,  self.izquierda(C, 0)[0]):
             H = self.copia(M)
             select[1][1] += self.izquierda(H,0)[1]
             select[1][2] = True
         
         print("despues: ",select)
+        '''
+        if select[3][2]:
+            print(select[3][0])
+            return select[3][0]
+        if select[2][2]:
+            print(select[2][0])
+            return select[2][0]
+        if select[0][2]:
+            print(select[0][0])
+            return select[0][0]
+        if select[1][2]:
+            print(select[1][0])
+            return select[1][0]
+        
+        '''
         max_puntaje = max(select[0][1],select[1][1],select[2][1],select[3][1])
         print('puntaje: ', max_puntaje)
         
@@ -238,6 +257,7 @@ class arcade:
                 if i == 1:
                     if c[0][1] == max_puntaje:
                         return c[0][0]
+        
     #end def
 
     ## -------------------------------------------------------------------------

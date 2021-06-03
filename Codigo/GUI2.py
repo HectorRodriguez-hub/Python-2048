@@ -83,7 +83,7 @@ class interface:
             #t.sleep(4)
             #entrada = tecla.lower()
             #if entrada == 'i': 
-                #entrada = self.game.max_score(aux[0],aux[1])
+            #    entrada = self.game.max_score(aux[0],aux[1])
             entrada = self.game.max_score(aux[0],aux[1])
             if entrada == 'w' or entrada == 'd' or entrada == 'a' or entrada == 's' or entrada == 'n':
                 M = self.game.copia(aux[0])
