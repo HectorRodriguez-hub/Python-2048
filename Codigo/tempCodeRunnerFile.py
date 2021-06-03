@@ -1,0 +1,1 @@
+self.game.max_score(aux[0],aux[1])
