@@ -9,6 +9,7 @@ from tkinter import *
 import Logica2048 as h
 import os
 import Colores as c
+import time
 
 ## -------------------------------------------------------------------------
 class interface:
@@ -64,7 +65,7 @@ class interface:
             game_over_cuadro = Frame(self.cuadro_principal, borderwidth=2)
             game_over_cuadro.place(relx=0.5, rely=0.5, anchor="center")
             Label( game_over_cuadro, text="Game over!", bg="#a39489", font =("Helvetica", 48, "bold") ).pack()
-    
+        
     ## -------------------------------------------------------------------------
     def play(self):
         #LLamado a funciones
@@ -79,8 +80,8 @@ class interface:
         cont = 0
         while game_over:
             #tecla = input("Please type a key: ")
-            #print('1')
-            #t.sleep(4)
+            print('1')
+            #time.sleep(4)
             #entrada = tecla.lower()
             #if entrada == 'i': 
             #    entrada = self.game.max_score(aux[0],aux[1])

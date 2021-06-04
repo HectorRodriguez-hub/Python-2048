@@ -179,6 +179,35 @@ class arcade:
             return True
         return False 
     #end def
+    
+    ## -------------------------------------------------------------------------
+    def choose_combinations(self, select, max_puntaje):
+        for i in range(4,1,-1):
+            for c in itertools.combinations(select,i):
+                if i == 4:
+                    if c[0][1] == c[1][1] and c[1][1] == c[2][1] and c[2][1] == c[3][1] and c[3][1] == max_puntaje:
+                        r = random.choice(c)
+                        while not r[2]:
+                            r = random.choice(c)
+                        return r[0]
+                    
+                if i == 3:
+                    if c[0][1] == c[1][1] and c[1][1] == c[2][1] and c[2][1] == max_puntaje:
+                        r = random.choice(c)
+                        while not r[2]:
+                            r = random.choice(c)
+                        return r[0]
+                    
+                if i == 2:
+                    if c[0][1] == c[1][1] and c[1][1] == max_puntaje:
+                        r = random.choice(c)
+                        while not r[2]:
+                            r = random.choice(c)
+                        return r[0]
+                if i == 1:
+                    if c[0][1] == max_puntaje:
+                        return c[0][0]
+    #end def
 
 
     ## -------------------------------------------------------------------------
@@ -187,7 +216,7 @@ class arcade:
         #t.sleep(4)
         C = self.copia(M)
         select = [['w',puntaje, False],['a',puntaje, False],['s',puntaje, False],['d',puntaje, False]]
-        print('antes: ',select)
+        #print('antes: ',select)
         if not self.iguales(M,  self.arriba(C, 0)[0]):
             H = self.copia(M)
             select[0][1] += self.arriba(H,0)[1]
@@ -199,7 +228,6 @@ class arcade:
             select[2][2] = True
         C = self.copia(M)
         if not self.iguales(M,  self.derecha(C, 0)[0]):
-            print(" wha happ")
             H = self.copia(M)
             select[3][1] += self.derecha(H,0)[1]
             select[3][2] = True
@@ -209,7 +237,7 @@ class arcade:
             select[1][1] += self.izquierda(H,0)[1]
             select[1][2] = True
         
-        print("despues: ",select)
+        #print("despues: ",select)
         '''
         if select[3][2]:
             print(select[3][0])
@@ -226,38 +254,9 @@ class arcade:
         
         '''
         max_puntaje = max(select[0][1],select[1][1],select[2][1],select[3][1])
-        print('puntaje: ', max_puntaje)
+        #print('puntaje: ', max_puntaje)
         
-        for i in range(4,1,-1):
-            for c in itertools.combinations(select,i):
-                print(c)
-                if i == 4:
-                    if c[0][1] == c[1][1] and c[1][1] == c[2][1] and c[2][1] == c[3][1] and c[3][1] == max_puntaje:
-                        r = random.choice(c)
-                        while not r[2]:
-                            r = random.choice(c)
-                            print(r)
-                        return r[0]
-                    
-                if i == 3:
-                    if c[0][1] == c[1][1] and c[1][1] == c[2][1] and c[2][1] == max_puntaje:
-                        r = random.choice(c)
-                        while not r[2]:
-                            r = random.choice(c)
-                            print(r)
-                        return r[0]
-                    
-                if i == 2:
-                    if c[0][1] == c[1][1] and c[1][1] == max_puntaje:
-                        r = random.choice(c)
-                        while not r[2]:
-                            r = random.choice(c)
-                            print(r)
-                        return r[0]
-                if i == 1:
-                    if c[0][1] == max_puntaje:
-                        return c[0][0]
-        
+        return self.choose_combinations(select, max_puntaje)
     #end def
 
     ## -------------------------------------------------------------------------
