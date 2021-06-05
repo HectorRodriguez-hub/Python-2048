@@ -237,24 +237,7 @@ class arcade:
             select[1][1] += self.izquierda(H,0)[1]
             select[1][2] = True
         
-        #print("despues: ",select)
-        '''
-        if select[3][2]:
-            print(select[3][0])
-            return select[3][0]
-        if select[2][2]:
-            print(select[2][0])
-            return select[2][0]
-        if select[0][2]:
-            print(select[0][0])
-            return select[0][0]
-        if select[1][2]:
-            print(select[1][0])
-            return select[1][0]
-        
-        '''
         max_puntaje = max(select[0][1],select[1][1],select[2][1],select[3][1])
-        #print('puntaje: ', max_puntaje)
         
         return self.choose_combinations(select, max_puntaje)
     #end def
